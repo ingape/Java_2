@@ -110,5 +110,7 @@ public class BlackKnight {
 		// Else return "You'l burn in hell forever!"
 		return "You'l burn in hell forever!";
 	}
+	
+	alivenames = alivenames.substring(0, alivenames.length - 3); 
 
 }
