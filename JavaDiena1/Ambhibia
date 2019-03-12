@@ -1,0 +1,24 @@
+package jtm.activity05;
+
+import jtm.activity04.Road;
+import jtm.activity04.Transport;
+
+public class Amphibia extends Transport{
+	
+	Vehicle vehicle;
+	Ship ship;
+	
+	private Amphibia(String id, float consumption, int tankSize, Vehicle vehicle, Ship ship) {
+		super(id, consumption, tankSize);
+		this.vehicle = vehicle;
+		this.ship = ship;
+	}
+
+	@Override
+	public String move(Road road) {
+		// TODO Auto-generated method stub
+		return super.move(road);
+	}
+	
+	
+}
