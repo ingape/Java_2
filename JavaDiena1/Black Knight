@@ -112,5 +112,8 @@ public class BlackKnight {
 	}
 	
 	alivenames = alivenames.substring(0, alivenames.length() - 3); 
+	
+	String s = "Valdis" + ", ";
+	s = s.substring(0, s.length()-2);
 
 }
