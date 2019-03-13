@@ -4,12 +4,6 @@ import jtm.activity04.Road;
 
 public class WaterRoad extends Road {
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
-	}
-
 	public WaterRoad(String from, String to, int distance) {
 		super(from, to, distance);
 		// TODO Auto-generated constructor stub
@@ -17,6 +11,11 @@ public class WaterRoad extends Road {
 
 	public WaterRoad() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {		
+		return this.getClass().getSimpleName() + " " + toString(); 		
 	}
 
 }
