@@ -8,7 +8,15 @@ import jtm.activity04.Transport;
 public class Ship extends Transport {
 	
 	protected byte sails;
-			
+		
+	public byte getSails() {
+		return sails;
+	}
+
+	public void setSails(byte sails) {
+		this.sails = sails;
+	}
+
 	public Ship(String id, byte sails) {
 		super(id, 0, 0);
 		this.sails = sails;
