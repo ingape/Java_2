@@ -8,7 +8,7 @@ import jtm.activity04.Transport;
 public class Ship extends Transport {
 	
 	protected byte sails;
-		
+
 	public byte getSails() {
 		return sails;
 	}
@@ -21,18 +21,18 @@ public class Ship extends Transport {
 		super(id, 0, 0);
 		this.sails = sails;
 	}
-	
+
 	public Ship(String id, float consumption, int tankSize) {
 		super(id, consumption, tankSize);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
-	public String move(Road road) {		
-		if(road instanceof WaterRoad) {			
-		return String.format("ID Ship is sailing on %s with %d sails", road, sails);
+	public String move(Road road) {
+		if (road instanceof WaterRoad) {
+			return String.format("%s Ship is sailing on %s with %d sails", getId(), road, sails);
 		}
-		return String.format("Cannot sail on %s ", road);
+		return String.format("Cannot sail on %s", road);
 	}	
 
 }
