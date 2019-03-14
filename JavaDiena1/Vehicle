@@ -5,7 +5,7 @@ import jtm.activity04.Transport;
 
 public class Vehicle extends Transport {
 	
-	protected int wheels;	
+	protected int wheels;
 
 	public int getWheels() {
 		return wheels;
@@ -24,13 +24,14 @@ public class Vehicle extends Transport {
 		super(id, consumption, tankSize);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
 	public String move(Road road) {
 		if (road.getClass() == Road.class) {
-			return String.format("ID Vehicle is driving on %s with %d wheels", road, wheels);
+			super.move(road);
+			return String.format("%s Vehicle is driving on %s with %d wheels", getId(), road, wheels);
 		}
-		return String.format("Cannot drive on %s ", road);
+		return String.format("Cannot drive on %s", road);
 	}
 	
 
