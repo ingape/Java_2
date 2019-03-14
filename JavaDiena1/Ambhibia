@@ -5,26 +5,35 @@ import jtm.activity04.Transport;
 
 public class Amphibia extends Transport{
 	
-	Vehicle vehicle;
-	private int wheels = vehicle.getWheels();
-	Ship ship;
-	private byte sails = ship.getSails();
-	
-	public Amphibia(String id, float consumption, int tankSize, int wheels, byte sails) {
+	private Vehicle vehicle = new Vehicle(getId(), getConsumption(), this.getWheels());
+	private int wheels = this.vehicle.getWheels();
+	private Ship ship =new Ship (getId(), getConsumption(), this.getSails());	
+	private byte sails = this.ship.getSails();
+
+	public Amphibia(String id, float consumption, int tankSize, byte sails, int wheels) {
 		super(id, consumption, tankSize);
 		this.wheels = wheels;
 		this.sails = sails;
 	}
 
+	private int getSails() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
+	private int getWheels() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public String move(Road road) {
 		if (road instanceof WaterRoad) {
-			return String.format("ID Ship is sailing on %s with %d sails", road, sails);
+			return String.format("%s Amphibia is sailing on %s with %d sails", getId(),road, sails);
 		}
 		if (road.getClass() == Road.class) {
-			return String.format("ID Vehicle is driving on %s with %d wheels", road, wheels);
+			super.move(road);
+			return String.format("%s Amphibia is driving on %s with %d wheels", getId(), road, wheels);
 		}
 		return "Not possible!";
 	}
