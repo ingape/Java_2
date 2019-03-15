@@ -1,0 +1,55 @@
+package jtm.activity06;
+
+public class Human implements Humanoid {
+	
+	public int weight;
+	
+	public Human() {
+		weight = 42;
+    }
+	
+	public Human(int weight) {
+		this.weight=weight;		
+	}
+	  
+
+	@Override
+	public int getWeight() {
+		return weight;
+	}
+
+	@Override
+	public void setWeight(int weight) {
+		this.weight=weight;
+
+	}
+
+	@Override
+	public String killHimself() {
+		return "Dead";
+	}
+
+	@Override
+	public int getArmCount() {		
+		return ARM_COUNT;
+	}
+
+	@Override
+	public Object getBackpack() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setBackpack(String item) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String isAlive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
