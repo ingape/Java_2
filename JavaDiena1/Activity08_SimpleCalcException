@@ -1,0 +1,16 @@
+package jtm.activity08;
+
+public class SimpleCalcException extends Exception {
+	
+	private String string;
+
+	public SimpleCalcException(String string) {		
+		this.string = string;
+	}
+
+	public SimpleCalcException(String string, Throwable cause) {
+		super(cause);
+		this.string = string;
+	}	
+
+}
