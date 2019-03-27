@@ -1,10 +1,9 @@
 package jtm.activity08;
-
-// TODO implement basic mathematical operations with int numbers in range
-// of [-10..+10] (including)
-// Note that:
-// 1. input range is checked using assertions (so if they are disabled, inputs can be any int)
-// 2. outputs are always checked and exception is thrown if it is outside proper range
+//TODO implement basic mathematical operations with int numbers in range
+//of [-10..+10] (including)
+//Note that:
+//1. input range is checked using assertions (so if they are disabled, inputs can be any int)
+//2. outputs are always checked and exception is thrown if it is outside proper range
 
 public class SimpleCalc {
 
@@ -34,7 +33,7 @@ public class SimpleCalc {
 	// TODO specify that method can throw SimpleCalcException
 	public static int divide(int a, int b) throws SimpleCalcException {
 		// TODO implement divide operation
-		result=a/b;
+		result = a / b;
 		return result;
 	}
 
@@ -93,26 +92,80 @@ public class SimpleCalc {
 	// If division by zero is performed, catch original exception and create
 	// new SimpleCalcException with message "division by zero" and add
 	// original division exception as a cause for it.
-	private static int validateOutput(int a, int b, String operation) throws SimpleCalcException {
-		if ((a==0)||(b==0)) {
-			return 0; //division by zero
+	private static int validateOutput(int a, int b, String operation) {
+		if ((a == 0) || (b == 0)) {
+			throw new ArithmeticException("division by zero");
+			/*try {
+			return 0; 
+			}catch (ArithmeticException e) {
+				System.out.println("division by zero");
+			}*/
 		}
-		if ((result > 10) || (result < -10)) {
+		if (result > 10) {
 			switch (operation) {
 			case "+":
-				return ("output value a + b = result is above 10");
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a + b = result is above 10");
+				}
 				break;
 			case "-":
-				return 0;
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a - b = result is above 10");
+				}
 				break;
 			case "*":
-				return 0;
+				try {
+					throw new SimpleCalcException ("");
+				}catch (SimpleCalcException e) {
+					System.out.println("output value a * b = result is above 10");
+				}
 				break;
 			case "/":
-				return 0;
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a / b = result is above 10");
+				}
 				break;
-			}			
-		}		
+			}
+		}
+		if (result < -10) {
+			switch (operation) {
+			case "+":
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a + b = result is below -10");
+				}
+				break;
+			case "-":
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a - b = result is below -10");
+				}
+				break;
+			case "*":
+				try {
+					throw new SimpleCalcException ("");
+				}catch (SimpleCalcException e) {
+					System.out.println("output value a * b = result is below -10");
+				}
+				break;
+			case "/":
+				try {
+					throw new SimpleCalcException ("");
+				} catch (SimpleCalcException e) {
+					System.out.println("output value a / b = result is below -10");
+				}
+				break;
+			}
+		}
 		return result;
 	}
 }
+
