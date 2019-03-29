@@ -1,5 +1,5 @@
 package jtm.activity08;
-
+package jtm.activity08;
 
 //TODO implement basic mathematical operations with int numbers in range
 //of [-10..+10] (including)
@@ -10,32 +10,41 @@ package jtm.activity08;
 public class SimpleCalc {
 
 	public static int result;
+	
 
 	// TODO specify that method can throw SimpleCalcException
 	public static int add(int a, int b) throws SimpleCalcException {
-		// TODO implement adding operation
+		// TODO implement adding operation		
+		validateInput(a, b);
 		result = a + b;
+		validateOutput(a, b, "+");
 		return result;
 	}
 
 	// TODO specify that method can throw SimpleCalcException
 	public static int subtract(int a, int b) throws SimpleCalcException {
 		// TODO implement subtract operation
+		validateInput(a, b);
 		result = a - b;
+		validateOutput(a, b, "-");
 		return result;
 	}
 
 	// TODO specify that method can throw SimpleCalcException
 	public static int multiply(int a, int b) throws SimpleCalcException {
 		// TODO implement multiply operation
+		validateInput(a, b);
 		result = a * b;
+		validateOutput(a, b, "*");
 		return result;
 	}
 
 	// TODO specify that method can throw SimpleCalcException
 	public static int divide(int a, int b) throws SimpleCalcException {
 		// TODO implement divide operation
+		validateInput(a, b);
 		result = a / b;
+		validateOutput(a, b, "/");
 		return result;
 	}
 
@@ -62,21 +71,21 @@ public class SimpleCalc {
 	//
 	private static void validateInput(int a, int b) {
 		if ((a < -10) && (b < -10)) {
-			System.out.println("input value a: " + a + " is below -10 and b: " + b + " is below -10");
+			assert false : "input value a: " + a + " is below -10 and b: " + b + " is below -10";
 		} else if ((a > 10) && (b > 10)) {
-			System.out.println("input value a: " + a + " is above 10 and b:" + b + " is above 10");
+			assert false : "input value a: " + a + " is above 10 and b: " + b + " is above 10";
 		} else if ((a < -10) && (b > 10)) {
-			System.out.println("input value a: " + a + " is below -10 and b: " + b + " is above 10");
+			assert false : "input value a: " + a + " is below -10 and b: " + b + " is above 10";
 		} else if ((a > 10) && (b < -10)) {
-			System.out.println("input value a: " + a + " is above 10 and b: " + b + " is below -10");
+			assert false : "input value a: " + a + " is above 10 and b: " + b + " is below -10";
 		} else if (a < -10) {
-			System.out.println("input value a: " + a + " is below -10");
+			assert false : "input value a: " + a + " is below -10";
 		} else if (a > 10) {
-			System.out.println("input value a: " + a + " is above 10");
+			assert false : "input value a: " + a + " is above 10";
 		} else if (b < -10) {
-			System.out.println("input value b: " + b + " is below -10");
+			assert false : "input value b: " + b + " is below -10";
 		} else if (b > 10) {
-			System.out.println("input value b: " + b + " is above 10");
+			assert false : "input value b: " + b + " is above 10";
 		}
 
 	}
@@ -95,29 +104,14 @@ public class SimpleCalc {
 	// new SimpleCalcException with message "division by zero" and add
 	// original division exception as a cause for it.
 	private static int validateOutput(int a, int b, String operation) throws ArithmeticException, SimpleCalcException {
-		if ((a == 0) || (b == 0)) {
-			throw new ArithmeticException("division by zero");			
+		if ((operation.equals("/")) && (b == 0)) {			
+			throw new SimpleCalcException("division by zero");				
 		}
-		if ((result > 10) || (result < -10)) {	
-			String ab = result > 10 ? "above " : "below -";
-			switch (operation) {
-            case "+":
-                result = add(a,b);
-                break;
-            case "-":
-                 result = subtract(a,b);
-                break;
-            case "*":
-                result = multiply(a,b);
-                break;
-            case "/":
-                result = divide(a,b);
-                break;
-            default:
-                throw new  ArithmeticException("invalid operation");
-            }			 
-			throw new SimpleCalcException (String.format("output value a %s b = result is %s 10", operation, ab));				
-		}		
+		if ((result > 10) || (result < -10)) {
+			String ab = result > 10 ? "above " : "below -";			
+			throw new SimpleCalcException(String.format("output value %d %s %d = %d is %s10", a, operation, b, result, ab));
+		}
 		return result;
 	}
 }
+
