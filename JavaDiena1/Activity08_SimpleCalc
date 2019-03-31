@@ -1,5 +1,4 @@
-package jtm.activity08;
-package jtm.activity08;
+package Activity_08;
 
 //TODO implement basic mathematical operations with int numbers in range
 //of [-10..+10] (including)
@@ -10,11 +9,10 @@ package jtm.activity08;
 public class SimpleCalc {
 
 	public static int result;
-	
 
 	// TODO specify that method can throw SimpleCalcException
 	public static int add(int a, int b) throws SimpleCalcException {
-		// TODO implement adding operation		
+		// TODO implement adding operation
 		validateInput(a, b);
 		result = a + b;
 		validateOutput(a, b, "+");
@@ -43,7 +41,11 @@ public class SimpleCalc {
 	public static int divide(int a, int b) throws SimpleCalcException {
 		// TODO implement divide operation
 		validateInput(a, b);
-		result = a / b;
+		try {
+			result = a / b;
+		} catch (Exception e) {
+			throw new SimpleCalcException ("division by zero", e);
+		}
 		validateOutput(a, b, "/");
 		return result;
 	}
@@ -103,15 +105,12 @@ public class SimpleCalc {
 	// If division by zero is performed, catch original exception and create
 	// new SimpleCalcException with message "division by zero" and add
 	// original division exception as a cause for it.
-	private static int validateOutput(int a, int b, String operation) throws ArithmeticException, SimpleCalcException {
-		if ((operation.equals("/")) && (b == 0)) {			
-			throw new SimpleCalcException("division by zero");				
-		}
+	private static int validateOutput(int a, int b, String operation) throws SimpleCalcException {		
 		if ((result > 10) || (result < -10)) {
-			String ab = result > 10 ? "above " : "below -";			
-			throw new SimpleCalcException(String.format("output value %d %s %d = %d is %s10", a, operation, b, result, ab));
+			String ab = result > 10 ? "above " : "below -";
+			throw new SimpleCalcException(
+					String.format("output value %d %s %d = %d is %s10", a, operation, b, result, ab));
 		}
 		return result;
 	}
 }
-
