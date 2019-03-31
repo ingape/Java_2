@@ -1,16 +1,14 @@
-package jtm.activity08;
+package Activity_08;
 
 public class SimpleCalcException extends Exception {
 	
-	private String string;
-
 	public SimpleCalcException(String string) {		
-		this.string = string;
+		super (string);
 	}
 
 	public SimpleCalcException(String string, Throwable cause) {
-		super(cause);
-		this.string = string;
+		super(string, cause);		
 	}	
 
 }
+
