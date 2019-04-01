@@ -1,5 +1,23 @@
 package jtm.activity09;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+/*-
+ * TODO #1
+ * Create data structure to hold:
+ *   1. some kind of collection of Orders (e.g. some List)
+ *   2. index to the current order for iterations through the Orders in Orders
+ *   Hints:
+ *   1. you can use your own implementation or rely on .iterator() of the List
+ *   2. when constructing list of orders, set number of current order to -1
+ *      (which is usual approach when working with iterateable collections).
+ */
+
 
 /*- TODO #2
  * Implement Iterator interface with Orders class
@@ -29,15 +47,62 @@ package jtm.activity09;
  *  - ItemN: Customer1,Customer2: 4
  */
 
-public class Orders {
-	/*-
-	 * TODO #1
-	 * Create data structure to hold:
-	 *   1. some kind of collection of Orders (e.g. some List)
-	 *   2. index to the current order for iterations through the Orders in Orders
-	 *   Hints:
-	 *   1. you can use your own implementation or rely on .iterator() of the List
-	 *   2. when constructing list of orders, set number of current order to -1
-	 *      (which is usual approach when working with iterateable collections).
-	 */
+public class Orders implements Iterator<Order> {
+	
+
+	List<Order> list=new ArrayList<Order>();	
+	//Iterator<Orders> i = list.iterator();
+	int currentOrder = -1;
+	
+	public Orders() {
+		
+	}
+	
+	public void add(Order item) {
+		list.add(item);		
+	}
+	
+	public List<Order> getItemsList(){
+		return list;
+	}
+	public Set<Order> getItemsSet(){
+		// Set<Order> getItemsSet()   — calculated Set of Orders from list (look at description below)
+		return null;
+	}
+	
+	public void sort() {
+		list.sort(null);
+	}
+
+	@Override
+	public boolean hasNext() {		
+		return currentOrder < list.size()-1;
+	}
+
+	@Override
+	public Order next() {
+		if (!hasNext()) {
+			throw new NoSuchElementException();
+		}		
+		return list.get(++currentOrder);		
+	}
+	
+	public void remove() {
+		if (currentOrder==-1) {
+			throw new IllegalStateException();
+		}
+		list.remove(currentOrder);
+	}
+	
+	@Override	
+	public String toString() {
+		String a = "";
+		for (Order o : list) {
+			a+= o.toString();
+		}
+		return a;
+	}
+	
 }
+
+
