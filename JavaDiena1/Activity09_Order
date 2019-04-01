@@ -25,9 +25,43 @@ package jtm.activity09;
  * 
  */
 
-public class Order {
+public class Order implements Comparable<Order> {
 	String customer; // Name of the customer
 	String name; // Name of the requested item
 	int count; // Count of the requested items
+
+	public Order(String orderer, String itemName, Integer count) {
+		this.customer = orderer;
+		this.name = itemName;
+		this.count = count;
+	}
+
+	@Override
+	public int compareTo(Order order) {
+		int n = name.compareTo(order.name);
+		if (n != 0) {
+			return n;
+		}
+		n = customer.compareTo(order.customer);
+		if (n != 0) {
+			return n;
+		}
+		return count > order.count ? 1 : count < order.count ? -1 : 0;
+	}
+
+	public boolean equals(Object object) {
+		if ((object==null)||!(object instanceof Order)) {
+			return false;
+		}
+		return this.compareTo((Order)object) == 0;		
+	}
+
+	public int hashCode() {
+		return name.hashCode() | customer.hashCode() | count;
+	}
+
+	public String toString() {
+		return String.format("%s: %s: %d", name, customer, count);
+	}
 
 }
