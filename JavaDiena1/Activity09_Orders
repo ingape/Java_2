@@ -71,7 +71,7 @@ public class Orders implements Iterator<Order> {
 	}
 	
 	public void sort() {
-		list.sort(null);
+		Collections.sort(list);
 	}
 
 	@Override
