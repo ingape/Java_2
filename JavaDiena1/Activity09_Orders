@@ -1,4 +1,5 @@
-java.lang.AssertionError: 'ItemNameA: OrdererA: 10'.compareTo('ItemNameA: Orderer0: 10') customer comparison error. expected:<1> but was:<17>
+java.lang.AssertionError: 'ItemNameA: OrdererA: 10'.compareTo('ItemNameA: Orderer0: 10') customer comparison error. 
+expected:<1> but was:<17>
 
 package jtm.activity09;
 
