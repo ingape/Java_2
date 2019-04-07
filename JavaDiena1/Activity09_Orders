@@ -69,9 +69,21 @@ public class Orders implements Iterator<Order> {
 		return list;
 	}
 	public Set<Order> getItemsSet(){
-		// Set<Order> getItemsSet()   — calculated Set of Orders from list (look at description below)
-		return null;
+			HashMap<String, Order> map = new HashMap<String, Order>();
+	    for (Order o : list) {
+	        String key  = o.name;
+	        if(map.containsKey(key)) {
+	            Order x = map.get(key);
+	            x.customer += "," + o.customer;
+	            x.count += o.count;
+	        } else {
+	            map.put(key, new Order(o.customer, o.name, o.count));
+	        }
+	    }
+	    
+	    return new HashSet<Order>(map.values());
 	}
+	
 	
 	public void sort() {
 		Collections.sort(list);
