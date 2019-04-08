@@ -40,11 +40,11 @@ public class Order implements Comparable<Order> {
 	public int compareTo(Order order) {
 		int n = name.compareTo(order.name);
 		if (n != 0) {
-			return n>0? 1:-1;
+			return n>0 ? 1:-1;
 		}
 		n = customer.compareTo(order.customer);
 		if (n != 0) {
-			return n>0? 1:-1;
+			return n>0 ? 1:-1;
 		}
 		return count > order.count ? 1 : count < order.count ? -1 : 0;
 	}
@@ -57,7 +57,7 @@ public class Order implements Comparable<Order> {
 	}
 
 	public int hashCode() {
-		return name.hashCode() | customer.hashCode() | count;
+		return name.hashCode() + customer.hashCode() + count;	
 	}
 
 	public String toString() {
