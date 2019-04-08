@@ -1,12 +1,12 @@
-java.lang.AssertionError: 'ItemNameA: OrdererA: 10'.compareTo('ItemNameA: Orderer0: 10') customer comparison error. 
-expected:<1> but was:<17>
-
 package jtm.activity09;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -20,7 +20,6 @@ import java.util.Set;
  *   2. when constructing list of orders, set number of current order to -1
  *      (which is usual approach when working with iterateable collections).
  */
-
 
 /*- TODO #2
  * Implement Iterator interface with Orders class
@@ -37,6 +36,8 @@ import java.util.Set;
  * - remove()                   — remove current Order (order got by previous next()) from list, throw IllegalStateException if can't
  * - String toString()          — show list of Orders as a String
  * 
+ * // To convert Orders to String, reuse .toString() method of List.toString()
+ * 
  * Hints:
  * 1. To convert Orders to String, reuse .toString() method of List.toString()
  * 2. Use built in List.sort() method to sort list of orders
@@ -51,73 +52,73 @@ import java.util.Set;
  */
 
 public class Orders implements Iterator<Order> {
-	
 
-	List<Order> list=new ArrayList<Order>();	
-	//Iterator<Orders> i = list.iterator();
+	List<Order> list = new ArrayList<Order>();
 	int currentOrder = -1;
-	
+
 	public Orders() {
-		
+
 	}
-	
+
 	public void add(Order item) {
-		list.add(item);		
+		list.add(item);
 	}
-	
-	public List<Order> getItemsList(){
+
+	public List<Order> getItemsList() {
 		return list;
 	}
-	public Set<Order> getItemsSet(){
-			HashMap<String, Order> map = new HashMap<String, Order>();
-	    for (Order o : list) {
-	        String key  = o.name;
-	        if(map.containsKey(key)) {
-	            Order x = map.get(key);
-	            x.customer += "," + o.customer;
-	            x.count += o.count;
-	        } else {
-	            map.put(key, new Order(o.customer, o.name, o.count));
-	        }
-	    }
-	    
-	    return new HashSet<Order>(map.values());
+
+	// calculated Set of Orders from list
+	/*
+	 * When implementing getItemsSet() method, join all requests for the same item
+	 * from different customers in following way: if there are two requests: -
+	 * ItemN: Customer1: 3 - ItemN: Customer2: 1 Set of orders should be: - ItemN:
+	 * Customer1,Customer2: 4
+	 */
+	public Set<Order> getItemsSet() {
+
+		HashMap<String, Order> map = new HashMap<String, Order>();
+		for (Order o : list) {
+			String key = o.name;
+			if (map.containsKey(key)) {
+				Order x = map.get(key);
+				x.customer += "," + o.customer;
+				x.count += o.count;
+			} else {
+				map.put(key, new Order(o.customer, o.name, o.count));
+			}
+		}
+
+		return new HashSet<Order>(map.values());
 	}
-	
-	
+
 	public void sort() {
-		Collections.sort(list);
+		Collections.sort(list);		 
 	}
 
 	@Override
-	public boolean hasNext() {		
-		return currentOrder < list.size()-1;
+	public boolean hasNext() {
+		return currentOrder < list.size() - 1;
 	}
 
 	@Override
 	public Order next() {
 		if (!hasNext()) {
 			throw new NoSuchElementException();
-		}		
-		return list.get(++currentOrder);		
+		}
+		return list.get(++currentOrder);
 	}
-	
+
 	public void remove() {
-		if (currentOrder==-1) {
+		if (currentOrder == -1) {
 			throw new IllegalStateException();
 		}
 		list.remove(currentOrder);
 	}
-	
-	@Override	
-	public String toString() {
-		String a = "";
-		for (Order o : list) {
-			a+= o.toString();
-		}
-		return a;
+
+	@Override
+	public String toString() {		
+		return list.toString();
 	}
-	
+
 }
-
-
