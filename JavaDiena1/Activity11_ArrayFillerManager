@@ -1,6 +1,10 @@
-package jtm.activity11;
+package Activity_11;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import Activity_09.Order;
 
 /**
  * This is frontend class for array filler. It uses ArrayFiller to fill array of
@@ -12,7 +16,7 @@ public class ArrayFillerManager {
 	static int minValue, maxValue; // min and max (including) of the
 									// array cell
 	private static LinkedList<Thread> threads; // list of threads when parallel
-										// filling is used
+	// filling is used
 
 	// HINT feel free to use main() method to call setUp(), fillStupidly() etc.
 	// for debugging purposes if unit tests doesn't show enough information,
@@ -24,7 +28,12 @@ public class ArrayFillerManager {
 		// initialize array with passed size
 		// initialize list of threads
 		// return reference to the initialized array
-		return null;
+		ArrayFillerManager.latency = latency;
+		ArrayFillerManager.minValue = minValue;
+		ArrayFillerManager.maxValue = maxValue;
+		array = new int[arraySize];
+		threads = new LinkedList<Thread>();
+		return array;
 	}
 
 	public static void fillStupidly() {
@@ -35,6 +44,16 @@ public class ArrayFillerManager {
 		// current (main) thread.
 		// Note that this method emulates, what would happen if you would send
 		// just small portions of data through media with latency.
+		for (int i = 0; i < array.length; i++) {
+			ArrayFiller a = new ArrayFiller(latency, minValue, maxValue, i, i);
+			Thread thread = new Thread(a);
+			thread.start();
+			try {
+				thread.join();
+			} catch (InterruptedException ie) {
+
+			}
+		}
 	}
 
 	public static void fillSequentially() {
@@ -44,6 +63,10 @@ public class ArrayFillerManager {
 		// Note that this method emulates, what would happen if you would do
 		// proper "buffering" with large amount of data, but do execution just
 		// in single thread.
+		ArrayFiller a = new ArrayFiller(latency, minValue, maxValue, 0, array.length - 1);
+		for (int i = 0; i < array.length; i++) {
+			a.run();
+		}
 	}
 
 	public static void fillParalelly() {
@@ -59,6 +82,19 @@ public class ArrayFillerManager {
 		// actually finished by calling .join() method for them.
 		// Note that this method emulates, what would happen if you do proper
 		// buffering and scaling of the execution.
+
+		for (int i = 0; i < array.length; i++) {
+			ArrayFiller a = new ArrayFiller(latency, minValue, maxValue, i, i);
+			Thread thread = new Thread(a);
+			threads.add(thread);
+			thread.start();
+		}
+
+		for (Thread t : threads) {
+			try {
+				t.join();
+			} catch (InterruptedException e) {}
+		}
 
 	}
 
