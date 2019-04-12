@@ -1,3 +1,18 @@
+FillValuesStupidly
+java.lang.AssertionError: Minimal random value: 5 is too far from bottom range:-100 for fillStupidly()
+
+FillValuesSequentially
+java.lang.AssertionError: Value of array[8]=23, what is below minimal range:100. Check you have filled all cells of the array.
+
+TestValuesParallelly
+java.lang.AssertionError: Value of array[16]=68, what is below minimal range:1000. Check you have filled all cells of the array.
+
+TestFillingTimes
+java.lang.AssertionError: Sequential speed (904.0) should be at least 100 times faster than stupid speed (769.0)
+
+
+
+
 package Activity_11;
 
 import java.util.ArrayList;
