@@ -1,3 +1,18 @@
+Expected
+TheItem1: TheCustomer1,TheCustomer2,TheCustomer3: 9
+TheItem2: TheCustomer1,TheCustomer2,TheCustomer3: 18
+TheItem3: TheCustomer1,TheCustomer2,TheCustomer3: 27
+
+Atcual
+TheItem2: TheCustomer3,TheCustomer2,TheCustomer1: 18
+TheItem3: TheCustomer3,TheCustomer2,TheCustomer1: 27
+TheItem1: TheCustomer3,TheCustomer2,TheCustomer1: 9
+
+
+
+
+
+
 package jtm.activity09;
 
 /*- TODO #1
