@@ -14,8 +14,7 @@ Actual
 
 
 
-package jtm.activity10;
-
+package Activity_10;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -121,9 +120,9 @@ public class StreamEditor {
 					curLineContent = content;
 				}
 			}
-			//if (!curLineContent.isEmpty()) {
+			if (!curLineContent.isEmpty()) {
 			writer.println(curLineContent);
-			//}
+			}
 		}
 
 		// TODO If number of input line is larger than number of lines in file,
