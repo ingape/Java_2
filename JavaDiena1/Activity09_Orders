@@ -121,5 +121,19 @@ public class Orders implements Iterator<Order> {
 	public String toString() {		
 		return list.toString();
 	}
+	
+		/*
+	public static void main(String[] args) {
+		Orders o= new Orders();
+		o.add(new Order("Customer3", "Item2", 18));
+		o.add(new Order("Customer3", "Item1", 18));
+		o.add(new Order("Customer3", "Item3", 18));
+		o.add(new Order("Customer2", "Item3", 18));
+		o.add(new Order("Customer1", "Item3", 18));
+		System.out.println(o);
+		o.sort();
+		System.out.println(o);
+	}
+	//*/
 
 }
