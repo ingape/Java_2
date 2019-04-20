@@ -78,6 +78,7 @@ public class Orders implements Iterator<Order> {
 	public Set<Order> getItemsSet() {
 
 		HashMap<String, Order> map = new HashMap<String, Order>();
+		sort();
 		for (Order o : list) {
 			String key = o.name;
 			if (map.containsKey(key)) {
