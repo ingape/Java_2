@@ -44,7 +44,7 @@ public class ArrayFiller implements Runnable {
 		}
 
 		for(int i=from; i<=to; i++) {
-			ArrayFillerManager.array[i]= random.nextInt(((maxValue - minValue) + 1) + minValue);
+			ArrayFillerManager.array[i]= random.nextInt(maxValue - minValue + 1) + minValue;
 		}
 	}
 
