@@ -78,9 +78,8 @@ public class ArrayFillerManager {
 		// proper "buffering" with large amount of data, but do execution just
 		// in single thread.
 		ArrayFiller a = new ArrayFiller(latency, minValue, maxValue, 0, array.length - 1);
-		for (int i = 0; i < array.length; i++) {
-			a.run();
-		}
+		a.run();
+		
 	}
 
 	public static void fillParalelly() {
