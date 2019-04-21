@@ -26,6 +26,14 @@ public class TeacherManager {
 		// for tests need to be executed server-wise, not just database-wise.
 		// 2. Set AutoCommit to false and use conn.commit() where necessary in
 		// other methods
+				
+		try {                    
+            conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity13.db");   
+            // conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
+            //conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } 
 	}
 
 	/**
@@ -41,6 +49,19 @@ public class TeacherManager {
 		// its fields!
 		// Hint: Because default database is not set in connection,
 		// use full notation for table "database_activity.Teacher"
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select * from database_activity.Teacher where id=" + id);
+			if(rs.next()) {				
+				return new Teacher(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
+			}
+			else {
+				return new Teacher(0, null, null);
+			}
+			
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return null;
 	}
 
@@ -60,8 +81,20 @@ public class TeacherManager {
 		// Note that search results of partial match
 		// in form ...like '%value%'... should be returned
 		// Note, that if nothing is found return empty list!
-		return null;
-
+		ArrayList<Teacher> list= new ArrayList<Teacher>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from database_activity.Teacher where firstName like ? and lastName ?");			
+			ps.setString(1, "%" + firstName + "%");
+			ps.setString(2, "%" + lastName + "%");			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {				
+				list.add(new Teacher(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName")));
+			}			
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return list;
 	}
 
 	/**
@@ -76,6 +109,13 @@ public class TeacherManager {
 
 	public boolean insertTeacher(String firstName, String lastName) {
 		// TODO #4 Write an sql statement that inserts teacher in database.
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("insert into database_activity.Teacher values ('" + firstName + "','" + lastName+ "')");
+			return res==1;
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return false;
 	}
 
@@ -87,7 +127,7 @@ public class TeacherManager {
 	 */
 	public boolean insertTeacher(Teacher teacher) {
 		// TODO #5 Write an sql statement that inserts teacher in database.
-		return false;
+		return insertTeacher(teacher.getFirstName(), teacher.getLastName());
 	}
 
 	/**
@@ -101,7 +141,16 @@ public class TeacherManager {
 	public boolean updateTeacher(Teacher teacher) {
 		boolean status = false;
 		// TODO #6 Write an sql statement that updates teacher information.
-		return false;
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("update database_activity.Teacher set firstName='" + teacher.getFirstName()+ 
+					"', lastName='" + teacher.getLastName()+ "' where id=" + teacher.getID());
+			status= res==1;
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		return status;
 	}
 
 	/**
@@ -114,11 +163,23 @@ public class TeacherManager {
 	 */
 	public boolean deleteTeacher(int id) {
 		// TODO #7 Write an sql statement that deletes teacher from database.
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("delete from database_activity.Teacher where id=" + id);
+			return res==1;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return false;
 	}
 
 	public void closeConnecion() {
 		// TODO Close connection if and reset it to release connection to the
 		// database server
+		try {
+			conn.close();
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 }
