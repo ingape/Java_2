@@ -10,6 +10,19 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import Activity_13.Teacher;
+
 public class StudentManager {
 
 	protected Connection conn;
@@ -26,6 +39,14 @@ public class StudentManager {
 		// for tests need to be executed server-wise, not just database-wise.
 		// 2. Set AutoCommit to false and use conn.commit() where necessary in
 		// other methods
+		
+		try {                    
+            conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity14.db");   
+            // conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
+            //conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
 	}
 
 	/**
@@ -41,6 +62,19 @@ public class StudentManager {
 		// its fields!
 		// Hint: Because default database is not set in connection,
 		// use full notation for table "database_activity.Student"
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("select * from database_activity.Student where id=" + id);
+			if(rs.next()) {				
+				return new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
+			}
+			else {
+				return new Student(0, null, null);
+			}
+			
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return null;
 	}
 
@@ -60,7 +94,20 @@ public class StudentManager {
 		// Note that search results of partial match
 		// in form ...like '%value%'... should be returned
 		// Note, that if nothing is found return empty list!
-		return null;
+		ArrayList<Student> list= new ArrayList<Student>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from database_activity.Student where firstName like ? and lastName ?");			
+			ps.setString(1, "%" + firstName + "%");
+			ps.setString(2, "%" + lastName + "%");			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {				
+				list.add(new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName")));
+			}			
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return list;
 
 	}
 
@@ -77,6 +124,13 @@ public class StudentManager {
 
 	public boolean insertStudent(String firstName, String lastName) {
 		// TODO #4 Write an sql statement that inserts teacher in database.
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("insert into database_activity.Student values ('" + firstName + "','" + lastName+ "')");
+			return res==1;
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return false;
 	}
 
@@ -88,7 +142,7 @@ public class StudentManager {
 	 */
 	public boolean insertStudent(Student student) {
 		// TODO #5 Write an sql statement that inserts teacher in database.
-		return false;
+		return insertStudent(student.getFirstName(), student.getLastName());
 	}
 
 	/**
@@ -102,7 +156,16 @@ public class StudentManager {
 	public boolean updateStudent(Student student) {
 		boolean status = false;
 		// TODO #6 Write an sql statement that updates teacher information.
-		return false;
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("update database_activity.Student set firstName='" + student.getFirstName()+ 
+					"', lastName='" + student.getLastName()+ "' where id=" + student.getID());
+			status= res==1;
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		return status;
 	}
 
 	/**
@@ -115,11 +178,23 @@ public class StudentManager {
 	 */
 	public boolean deleteStudent(int id) {
 		// TODO #7 Write an sql statement that deletes teacher from database.
+		try {
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate("delete from database_activity.Student where id=" + id);
+			return res==1;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 		return false;
 	}
 
 	public void closeConnecion() {
 		// TODO Close connection if and reset it to release connection to the
 		// database server
+		try {
+			conn.close();
+		}catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 }
