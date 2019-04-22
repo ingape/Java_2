@@ -26,7 +26,7 @@ import Activity_13.Teacher;
 public class StudentManager {
 
 	protected Connection conn;
-	private static Logger log = Logger.getLogger(StudentManager.class);
+	//private static Logger log = Logger.getLogger(StudentManager.class);
 
 	public StudentManager() {
 		// TODO #1 When new StudentManager is created, create connection to the
@@ -41,9 +41,9 @@ public class StudentManager {
 		// other methods
 		
 		try {                    
-            conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity14.db");   
-            // conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
-            //conn.setAutoCommit(false);
+            //conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity14.db");   
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
+            conn.setAutoCommit(false);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -127,6 +127,7 @@ public class StudentManager {
 		try {
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate("insert into database_activity.Student values ('" + firstName + "','" + lastName+ "')");
+			conn.commit();
 			return res==1;
 		}catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -161,6 +162,7 @@ public class StudentManager {
 			int res = st.executeUpdate("update database_activity.Student set firstName='" + student.getFirstName()+ 
 					"', lastName='" + student.getLastName()+ "' where id=" + student.getID());
 			status= res==1;
+			conn.commit();
 		}catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
@@ -181,6 +183,7 @@ public class StudentManager {
 		try {
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate("delete from database_activity.Student where id=" + id);
+			conn.commit();
 			return res==1;
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
