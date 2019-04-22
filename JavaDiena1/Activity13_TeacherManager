@@ -28,9 +28,9 @@ public class TeacherManager {
 		// other methods
 				
 		try {                    
-            conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity13.db");   
-            // conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
-            //conn.setAutoCommit(false);
+            //conn = DriverManager.getConnection("jdbc:sqlite:W:/Inga/e/activity13.db");   
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root", "abcd1234");
+            conn.setAutoCommit(false);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         } 
@@ -51,7 +51,7 @@ public class TeacherManager {
 		// use full notation for table "database_activity.Teacher"
 		try {
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from database_activity.Teacher where id=" + id);
+			ResultSet rs = st.executeQuery("select * from database_activity.Teacher where id=" + id);			
 			if(rs.next()) {				
 				return new Teacher(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
 			}
@@ -86,8 +86,7 @@ public class TeacherManager {
 			PreparedStatement ps = conn.prepareStatement("select * from database_activity.Teacher where firstName like ? and lastName ?");			
 			ps.setString(1, "%" + firstName + "%");
 			ps.setString(2, "%" + lastName + "%");			
-			ResultSet rs = ps.executeQuery();
-			
+			ResultSet rs = ps.executeQuery();			
 			while(rs.next()) {				
 				list.add(new Teacher(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName")));
 			}			
@@ -112,6 +111,7 @@ public class TeacherManager {
 		try {
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate("insert into database_activity.Teacher values ('" + firstName + "','" + lastName+ "')");
+			conn.commit();
 			return res==1;
 		}catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -146,6 +146,7 @@ public class TeacherManager {
 			int res = st.executeUpdate("update database_activity.Teacher set firstName='" + teacher.getFirstName()+ 
 					"', lastName='" + teacher.getLastName()+ "' where id=" + teacher.getID());
 			status= res==1;
+			conn.commit();
 		}catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
@@ -166,6 +167,7 @@ public class TeacherManager {
 		try {
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate("delete from database_activity.Teacher where id=" + id);
+			conn.commit();
 			return res==1;
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -183,3 +185,4 @@ public class TeacherManager {
 		}
 	}
 }
+
