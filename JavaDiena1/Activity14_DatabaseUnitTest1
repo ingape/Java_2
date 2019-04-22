@@ -1,0 +1,90 @@
+package Activity_14;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class DatabaseUnitTest1 {
+	public static StudentManager sm;	
+
+	@BeforeClass public static void setUpBeforeClass() throws Exception { 
+		sm = new StudentManager();
+	}
+	 
+	@AfterClass public static void tearDownAfterClass() throws Exception {
+		sm.closeConnecion();
+	}
+	 
+	 /* @Before public void setUp() throws Exception { }
+	 * 
+	 * @After public void tearDown() throws Exception { }
+	 */
+
+	@Test
+	public final void testStudentManager() {
+	    Assert.assertNotNull("Wrong returned search value", sm);
+		//fail("Not yet implemented"); // TODOconn.commit();
+	}
+
+	@Test
+	public final void testFindStudentInt() {
+		Student s = sm.findStudent(-1);
+		Assert.assertTrue(s.getID()==0);
+		s = sm.findStudent(1);
+		Assert.assertTrue(s.getID()!=0);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public final void testFindStudentStringString() {
+		List<Student> s= sm.findStudent("2", "2");
+		Assert.assertTrue(s.size()==0);
+		s= sm.findStudent("", "");
+		Assert.assertTrue(s.size()!=0);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public final void testInsertStudentStringString() {
+		boolean s = sm.insertStudent("xxx", "yyy");
+		Assert.assertTrue(s);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public final void testInsertStudentStudent() {
+		boolean s = sm.insertStudent(new Student(0, "xxx", "yyy"));
+		Assert.assertTrue(s);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public final void testUpdateStudent() {
+		boolean s = sm.updateStudent(new Student(1, "xxx", "yyyy"));
+		Assert.assertTrue(s);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public final void testDeleteStudent() {
+		boolean s = sm.deleteStudent(0);
+		Assert.assertFalse(s);
+		s = sm.deleteStudent(1);
+		Assert.assertTrue(s);
+		//fail("Not yet implemented"); // TODO
+	}
+
+	/*
+	 * @Test public final void testCloseConnecion() { try { sm.conn.close(); }catch
+	 * (Exception e) { fail(e.getMessage()); } //TODO }
+	 */
+
+}
