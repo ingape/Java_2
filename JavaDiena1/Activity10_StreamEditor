@@ -111,7 +111,7 @@ public class StreamEditor {
 		// NOTE: append break at the end of written line only if it is NOT null
 		// or empty string!
 	
-		while ((curLineContent = reader.readLine()) != null) {
+		while ((curLineContent = reader.readLine()) != null && (!curLineContent.isEmpty())) {
 			curLineNo++;
 			if (Math.abs(inLineNo) == curLineNo) {
 				if (inLineNo < 0) {
